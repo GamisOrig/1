@@ -1,52 +1,30 @@
 print('*Калькулятор перевода из n-ричной в n-ричную*')
-number = int(input('Введите число:'))
-ss1 = int(input('Введите систему счисления:'))
+number = int(input('Введите число:\n'))
+numSys1 = int(input('Введите систему счисления:\n'))
 
-if 1 < ss1 < 33:
-    ss2 = int(input('Введите желаемую систему счисления:'))
-    if ss2 == ss1:
+if 1 < numSys1 < 33:
+    numSys2 = int(input('Введите желаемую систему счисления:\n'))
+
+    if numSys2 == numSys1:
         print('Нечего переводить')
-    elif 1 < ss2 < 33:
 
-        '''def разложения числа и нахождения маскимального'''
+    elif 1 < numSys2 < 33:
 
-
-        def _rc(number):
-            ns1 = []
-
-            while number > 0:
-                ns1.append(number % 10)
-                number = number // 10
-
-            ns1 = ns1[::-1]
-            m = max(ns1)
-            return m
-
+        '''разложениe числа и нахождения маскимального'''
+        decdNum = [int(i) for i in str(number)]
 
         # проверка на соответствие сс и числа
-        if _rc(number) >= ss1:
+        if max(decdNum) >= numSys1:
             print('Некорректная система счисления для такого числа')
+
         else:
             # !!def из действительной сс в 10-сс:
-            def _nto10(number):
-                ns = []
-                lc = len(str(number))
-                _lc = []
-                s = []
-
-                while number > 0:
-                    ns.append(number % 10)
-                    number = number // 10
-
-                ns = ns[::-1]
-
-                while lc > 0:
-                    lc = lc - 1
-                    _lc.append(lc)
-
-                for i in range(0, len(ns)):
-                    s.append(ns[i] * ss1 ** _lc[i])
+            def _nto10(decdNum):
+                print(decdNum, type(decdNum))
+                rows = [int(i) for i in range(len(decdNum))]
+                s = [decdNum[i] * numSys1 ** rows[i] for i in range(len(decdNum))]
                 s = (sum(s))
+
                 return s
 
 
@@ -74,10 +52,10 @@ if 1 < ss1 < 33:
                 d = 0
 
                 while number > 0:
-                    d = number % ss2
-                    number = number // ss2
+                    d = number % numSys2
+                    number = number // numSys2
                     _d2.append(d)
-
+                print(_d2)
                 _d2 = _d2[::-1]
                 _d2 = int(''.join(map(str, _d2)))
                 print(type(_d2))
@@ -89,26 +67,27 @@ if 1 < ss1 < 33:
             def _nton(number):
                 _nto10(number)
 
-                if ss2 != 2:
-                    return _10ton(_nto10(number))
+                if numSys2 != 2:
+                    return _10ton(_nto10(decdNum))
                 else:
-                    return _10to2(_nto10(number))
+                    return _10to2(_nto10(decdNum))
 
 
             # !!из действительной сс в 10-сс:
-            if ss2 == 10:
-                print(_nto10(number))
+            if numSys2 == 10:
+                decdNum.reverse()
+                print(_nto10(decdNum))
 
             # !!из 10-сс в 2-сс
-            elif ss1 == 10 and ss2 == 2:
+            elif numSys1 == 10 and numSys2 == 2:
                 print(_10to2(number))
 
             # !!из 10-сс в желаемую сс
-            elif ss1 == 10 and ss2 != 10:
+            elif numSys1 == 10 and numSys2 != 10:
                 print(_10ton(number))
 
             # !!из действительной сс в желаемую сс:
-            elif ss1 != 10 and ss2 != 10:
+            elif numSys2 != 10 and numSys2 != 10:
                 print(_nton(number))
 
     else:
